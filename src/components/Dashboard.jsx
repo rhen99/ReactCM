@@ -1,3 +1,4 @@
+import CustomerList from "./CustomerList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -7,6 +8,11 @@ function Dashboard() {
       <Row>
         <Col>
           <h1>Customer List</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <CustomerList />
         </Col>
       </Row>
     </Container>
