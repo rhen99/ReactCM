@@ -4,10 +4,12 @@ function CustomerList() {
   return (
     <Table hover className="mt-5">
       <thead>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Actions</th>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <Customer />
     </Table>
