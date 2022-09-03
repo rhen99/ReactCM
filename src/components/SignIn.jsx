@@ -1,3 +1,4 @@
+import { useAuth } from "../context/state/AuthState";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -5,6 +6,11 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Google } from "react-bootstrap-icons";
 function SignIn() {
+  const { signIn } = useAuth();
+  const signInWithGoogle = (e) => {
+    e.preventDefault();
+    signIn();
+  };
   return (
     <Container className="mt-5">
       <Row className="mb-4">
@@ -14,8 +20,13 @@ function SignIn() {
       </Row>
       <Row>
         <Col>
-          <Form className="text-center">
-            <Button variant="primary" size="lg" style={{ width: "50%" }}>
+          <Form className="text-center" onSubmit={signInWithGoogle}>
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              style={{ width: "50%" }}
+            >
               <Google color="white" className="mx-1 pb-1" />
               Sign In With Google
             </Button>

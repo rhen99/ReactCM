@@ -1,8 +1,16 @@
+import { useAuth } from "../context/state/AuthState";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 function Header() {
+  const { signOut } = useAuth();
+  const logOut = (e) => {
+    e.preventDefault();
+    console.log(signOut());
+  };
   return (
     <Navbar bg="primary" variant="dark" collapseOnSelect expand="lg">
       <Container>
@@ -11,7 +19,11 @@ function Header() {
         <Navbar.Collapse id="responsiveNav" className="justify-content-end">
           <Nav navbarScroll>
             <NavDropdown title="Account" id="navbarScrollingDropdown">
-              <NavDropdown.Item href="#action4">Log Out</NavDropdown.Item>
+              <Form onSubmit={logOut}>
+                <Button type="submit" variant="default">
+                  Log Out
+                </Button>
+              </Form>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>

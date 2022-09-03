@@ -1,4 +1,5 @@
 import { useState } from "react";
+// import { useAuth } from "../context/state/AuthState";
 import CustomerList from "./CustomerList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,6 +10,7 @@ function Dashboard() {
   const [showAddModal, setShowAddModal] = useState(false);
   const handleShowAddModal = () => setShowAddModal(true);
   const handleCloseAddModal = () => setShowAddModal(false);
+
   return (
     <Container className="mt-5">
       <Row>
