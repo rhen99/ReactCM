@@ -4,6 +4,7 @@ import SignIn from "./components/SignIn";
 import Dashboard from "./components/Dashboard";
 import { AuthProvider } from "./context/state/AuthState";
 import { CustomersProvider } from "./context/state/CustomersState";
+
 function App() {
   return (
     <AuthProvider>
@@ -12,7 +13,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/signin" element={<SignIn />} />
+            <Route path="/" element={<SignIn />} />
           </Routes>
         </Router>
       </CustomersProvider>
