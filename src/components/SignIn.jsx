@@ -1,4 +1,4 @@
-import { useAuth } from "../context/state/AuthState";
+import { useAuthContext } from "../context/state/AuthState";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Google } from "react-bootstrap-icons";
 function SignIn() {
-  const { signIn } = useAuth();
+  const { signIn } = useAuthContext();
   const signInWithGoogle = (e) => {
     e.preventDefault();
     signIn();

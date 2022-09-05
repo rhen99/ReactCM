@@ -8,7 +8,7 @@ const initalState = {
 
 export const AuthContext = createContext(initalState);
 
-export const useAuth = () => {
+export const useAuthContext = () => {
   return useContext(AuthContext);
 };
 

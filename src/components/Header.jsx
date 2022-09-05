@@ -1,4 +1,4 @@
-import { useAuth } from "../context/state/AuthState";
+import { useAuthContext } from "../context/state/AuthState";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
@@ -6,7 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 function Header() {
-  const { signOut } = useAuth();
+  const { signOut } = useAuthContext();
   const logOut = (e) => {
     e.preventDefault();
     console.log(signOut());
