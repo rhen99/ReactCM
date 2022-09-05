@@ -39,11 +39,25 @@ export const CustomersProvider = ({ children }) => {
       payload: newCustomer,
     });
   };
+  const updateCustomer = (newCustomer) => {
+    dispatch({
+      type: "update-customer",
+      payload: newCustomer,
+    });
+  };
+  const deleteCustomer = (id) => {
+    dispatch({
+      type: "delete-customer",
+      payload: id,
+    });
+  };
   return (
     <CustomersContext.Provider
       value={{
         customers: state.customers,
         addCustomer,
+        deleteCustomer,
+        updateCustomer,
       }}
     >
       {children}

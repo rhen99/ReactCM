@@ -15,7 +15,7 @@ const reducer = (state, action) => {
         ...state,
         customers: state.customers.map((customer) => {
           if (customer.id === action.payload.id) {
-            return action.payload.updatedCustomer;
+            return action.payload;
           }
           return customer;
         }),
@@ -23,7 +23,7 @@ const reducer = (state, action) => {
     case ACTIONS.DELETE_CUSTOMER:
       return {
         ...state,
-        customers: state.filter((customer) => {
+        customers: state.customers.filter((customer) => {
           return customer.id !== action.payload;
         }),
       };
