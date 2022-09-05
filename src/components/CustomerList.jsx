@@ -1,6 +1,6 @@
 import Table from "react-bootstrap/Table";
 import Customer from "./Customer";
-function CustomerList() {
+function CustomerList({ customers }) {
   return (
     <Table hover className="mt-5">
       <thead>
@@ -8,10 +8,12 @@ function CustomerList() {
           <th>Name</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>Actions</th>
+          <th>More...</th>
         </tr>
       </thead>
-      <Customer />
+      {customers.map((customer) => (
+        <Customer key={customer.id} customer={customer} />
+      ))}
     </Table>
   );
 }
