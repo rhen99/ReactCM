@@ -31,11 +31,19 @@ export const useCustomersContext = () => {
 };
 
 export const CustomersProvider = ({ children }) => {
-  const [state] = useReducer(CustomersReducer, initalState);
+  const [state, dispatch] = useReducer(CustomersReducer, initalState);
+
+  const addCustomer = (newCustomer) => {
+    dispatch({
+      type: "add-customer",
+      payload: newCustomer,
+    });
+  };
   return (
     <CustomersContext.Provider
       value={{
         customers: state.customers,
+        addCustomer,
       }}
     >
       {children}

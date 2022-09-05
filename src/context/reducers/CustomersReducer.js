@@ -8,9 +8,9 @@ const reducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.GET_CUSTOMERS:
       return { ...state, customers: action.payload };
-    case ACTIONS.ADD_CUSTOMERS:
+    case ACTIONS.ADD_CUSTOMER:
       return { ...state, customers: [...state.customers, action.payload] };
-    case ACTIONS.UPDATE_CUSTOMERS:
+    case ACTIONS.UPDATE_CUSTOMER:
       return {
         ...state,
         customers: state.customers.map((customer) => {
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
           return customer;
         }),
       };
-    case ACTIONS.DELETE_CUSTOMERS:
+    case ACTIONS.DELETE_CUSTOMER:
       return {
         ...state,
         customers: state.filter((customer) => {

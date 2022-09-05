@@ -15,6 +15,9 @@ function Customer({ customer }) {
             <Dropdown.Menu>
               <Dropdown.Item href="#">Edit</Dropdown.Item>
               <Dropdown.Item href="#">Delete</Dropdown.Item>
+              <Dropdown.Item href="#" target="_blank">
+                Open Social Media
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </td>

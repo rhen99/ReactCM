@@ -1,7 +1,6 @@
 import { useState } from "react";
 // import { useAuthContext } from "../context/state/AuthState";
 import { useCustomersContext } from "../context/state/CustomersState";
-import { CustomersProvider } from "../context/state/CustomersState";
 import CustomerList from "./CustomerList";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -15,31 +14,29 @@ function Dashboard() {
   const handleCloseAddModal = () => setShowAddModal(false);
 
   return (
-    <CustomersProvider>
-      <Container className="mt-5">
-        <Row>
-          <Col>
-            <h1>Customer List</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="text-end">
-            <Button variant="success" onClick={handleShowAddModal}>
-              Add Customer
-            </Button>
-            <AddModal
-              show={showAddModal}
-              handleCloseAddModal={handleCloseAddModal}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <CustomerList customers={customers} />
-          </Col>
-        </Row>
-      </Container>
-    </CustomersProvider>
+    <Container className="mt-5">
+      <Row>
+        <Col>
+          <h1>Customer List</h1>
+        </Col>
+      </Row>
+      <Row>
+        <Col className="text-end">
+          <Button variant="success" onClick={handleShowAddModal}>
+            Add Customer
+          </Button>
+          <AddModal
+            show={showAddModal}
+            handleCloseAddModal={handleCloseAddModal}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <CustomerList customers={customers} />
+        </Col>
+      </Row>
+    </Container>
   );
 }
 
