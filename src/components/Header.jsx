@@ -4,10 +4,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 function Header() {
-  const { signOut, isAuthenticated } = useAuthContext();
+  const { user, removeUser } = useAuthContext();
   const logOut = (e) => {
     e.preventDefault();
-    signOut();
+    localStorage.removeItem("user");
+    removeUser();
   };
   return (
     <Navbar bg="primary" variant="dark" collapseOnSelect expand="lg">
@@ -16,7 +17,7 @@ function Header() {
         <Navbar.Toggle aria-controls="responsiveNav" />
         <Navbar.Collapse id="responsiveNav" className="justify-content-end">
           <Nav navbarScroll>
-            {isAuthenticated && (
+            {user && (
               <NavDropdown title="Account" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="#" onClick={logOut}>
                   Log Out

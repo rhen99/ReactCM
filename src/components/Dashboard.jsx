@@ -16,11 +16,17 @@ function Dashboard() {
   const handleCloseAddModal = () => setShowAddModal(false);
 
   let navigate = useNavigate();
-  const { isAuthenticated } = useAuthContext();
+  const { signIn, user } = useAuthContext();
 
   useEffect(() => {
-    if (!isAuthenticated) navigate("/");
-  }, [navigate, isAuthenticated]);
+    if (localStorage.getItem("user")) {
+      if (!user) {
+        signIn(JSON.parse(localStorage.getItem("user")));
+      }
+    } else {
+      navigate("/");
+    }
+  }, [navigate, signIn, user]);
 
   return (
     <Container className="mt-5">

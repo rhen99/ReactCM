@@ -1,8 +1,9 @@
+import { auth } from "../../firebase";
+import { useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { createContext, useContext, useReducer } from "react";
 import AuthReducer from "../reducers/AuthReducer";
 
 const initalState = {
-  isAuthenticated: false,
   user: null,
 };
 
@@ -12,23 +13,18 @@ export const useAuthContext = () => {
   return useContext(AuthContext);
 };
 
+export const useGoogleSignIn = () => useSignInWithGoogle(auth);
+
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initalState);
 
-  const signIn = () => {
-    dispatch({
-      type: "authenticate",
-      payload: true,
-    });
+  const signIn = (user) => {
     dispatch({
       type: "get-user",
-      payload: {},
+      payload: user,
     });
   };
-  const signOut = () => {
-    dispatch({
-      type: "unauthenticate",
-    });
+  const removeUser = () => {
     dispatch({
       type: "remove-user",
     });
@@ -36,10 +32,9 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: state.isAuthenticated,
         user: state.user,
         signIn,
-        signOut,
+        removeUser,
       }}
     >
       {children}
