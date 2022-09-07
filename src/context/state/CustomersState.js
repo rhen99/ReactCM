@@ -1,4 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
+import { firestore } from "../../firebase";
+import { collection, query, where, addDoc, doc } from "firebase/firestore";
 import CustomersReducer from "../reducers/CustomersReducer";
 
 const initalState = {
@@ -28,6 +30,12 @@ export const CustomersContext = createContext(initalState);
 
 export const useCustomersContext = () => {
   return useContext(CustomersContext);
+};
+
+export const createCustomer = async (newCustomer) => {
+  const docRef = await addDoc(collection(firestore, "customers"), newCustomer);
+
+  console.log(docRef.id);
 };
 
 export const CustomersProvider = ({ children }) => {

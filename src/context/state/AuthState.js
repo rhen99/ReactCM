@@ -1,6 +1,7 @@
 import { auth } from "../../firebase";
-import { useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { createContext, useContext, useReducer } from "react";
+import { useSignInWithGoogle, useAuthState } from "react-firebase-hooks/auth";
+
+import { createContext, useContext, useReducer, useEffect } from "react";
 import AuthReducer from "../reducers/AuthReducer";
 
 const initalState = {
@@ -13,12 +14,27 @@ export const useAuthContext = () => {
   return useContext(AuthContext);
 };
 
-export const useGoogleSignIn = () => useSignInWithGoogle(auth);
+export const useGoogleSignIn = () => {
+  return useSignInWithGoogle(auth);
+};
+
+export const signOutUser = () => {
+  return auth.signOut();
+};
 
 export const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initalState);
 
-  const signIn = (user) => {
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      return getUser(user);
+    }
+    return getUser(null);
+  }, [user]);
+
+  const getUser = (user) => {
     dispatch({
       type: "get-user",
       payload: user,
@@ -32,8 +48,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        user: state.user,
-        signIn,
+        currentUser: state.user,
         removeUser,
       }}
     >

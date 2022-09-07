@@ -1,49 +1,49 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthContext, useGoogleSignIn } from "../context/state/AuthState";
+import { useGoogleSignIn, useAuthContext } from "../context/state/AuthState";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
 import { Google } from "react-bootstrap-icons";
 
 function SignIn() {
-  let navigate = useNavigate();
-  const { signIn, user } = useAuthContext();
+  const [signInWithGoogle, , loading, error] = useGoogleSignIn();
+  const navigate = useNavigate();
 
-  const [signInWithGoogle, userData, loading, error] = useGoogleSignIn();
+  const { currentUser } = useAuthContext();
 
   useEffect(() => {
-    if (localStorage.getItem("user") && !user) {
-      signIn(JSON.parse(localStorage.getItem("user")));
+    if (currentUser) {
+      localStorage.setItem("isAuth", true);
       navigate("/dashboard");
     }
-  }, [signIn, user, navigate]);
+  });
   if (error) {
     return (
       <Container className="mt-5">
         <Row className="mb-4">
           <Col>
-            <p>{error.message}</p>
+            <Alert variant="danger">
+              {error.message} <Alert.Link href="/">Go back</Alert.Link>
+            </Alert>
           </Col>
         </Row>
       </Container>
     );
   }
-  if (loading) {
+  if (loading || localStorage.getItem("isAuth")) {
     return (
       <Container className="mt-5">
         <Row className="mb-4">
-          <Col>
-            <p>Loading...</p>
+          <Col className="text-center">
+            <Spinner variant="primary" animation="border" />
           </Col>
         </Row>
       </Container>
     );
-  }
-  if (userData) {
-    localStorage.setItem("user", JSON.stringify(userData));
-    navigate("/dashboard");
   }
 
   return (
