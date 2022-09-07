@@ -1,7 +1,11 @@
 import { createContext, useContext, useReducer, useEffect } from "react";
 import CustomersReducer from "../reducers/CustomersReducer";
 import { useAuthContext } from "./AuthState";
-import { setCustomer, getUserCustomers } from "../../services/CustomersService";
+import {
+  setCustomerData,
+  getCustomersData,
+  deleteCustomerData,
+} from "../../services/CustomersService";
 
 const initalState = {
   customers: [],
@@ -18,7 +22,7 @@ export const CustomersProvider = ({ children }) => {
   const { currentUser } = useAuthContext();
 
   const addCustomer = (newCustomer) => {
-    setCustomer(newCustomer)
+    setCustomerData(newCustomer)
       .then((docRef) => {
         dispatch({
           type: "add-customer",
@@ -30,13 +34,13 @@ export const CustomersProvider = ({ children }) => {
       });
   };
   const getCustomers = (user_id) => {
-    getUserCustomers(user_id)
+    getCustomersData(user_id)
       .then((querySnapshot) => {
         const customersArr = [];
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
           let customerObj = {
-            id: doc.ref,
+            id: doc.id,
             name: doc.data().name,
             email: doc.data().email,
             phone: doc.data().phone,
@@ -58,10 +62,14 @@ export const CustomersProvider = ({ children }) => {
     });
   };
   const deleteCustomer = (id) => {
-    dispatch({
-      type: "delete-customer",
-      payload: id,
-    });
+    deleteCustomerData(id)
+      .then(() => {
+        dispatch({
+          type: "delete-customer",
+          payload: id,
+        });
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
