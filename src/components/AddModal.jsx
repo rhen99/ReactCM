@@ -2,29 +2,41 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useCustomersContext } from "../context/state/CustomersState";
 import { useAuthContext } from "../context/state/AuthState";
+import {
+  useCustomersContext,
+  setCustomer,
+} from "../context/state/CustomersState";
 function AddModal({ show, handleCloseAddModal }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [url, setUrl] = useState("");
 
+  const { currentUser } = useAuthContext();
   const { addCustomer } = useCustomersContext();
-  const { user } = useAuthContext();
+
+  const [uid] = useState(currentUser?.uid);
 
   const handleAddCustomer = (e) => {
     e.preventDefault();
     handleCloseAddModal();
     const newCustomer = {
-      id: Math.floor(Math.random * 999999),
       name,
       email,
       phone,
       url,
-      user_id: user.user.uid,
+      creator_id: uid,
     };
-    addCustomer(newCustomer);
+    setCustomer(newCustomer)
+      .then((docRef) => {
+        addCustomer({ ...newCustomer, id: docRef.id });
+        setName("");
+        setEmail("");
+        setPhone("");
+        setUrl("");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <Modal show={show} onHide={handleCloseAddModal}>
@@ -34,7 +46,9 @@ function AddModal({ show, handleCloseAddModal }) {
       <Modal.Body>
         <Form onSubmit={handleAddCustomer}>
           <Form.Group className="mb-3" controlId="customerName">
-            <Form.Label>Customer Name</Form.Label>
+            <Form.Label>
+              Customer Name <span style={{ color: "red" }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setName(e.target.value)}
@@ -43,7 +57,9 @@ function AddModal({ show, handleCloseAddModal }) {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="customerEmail">
-            <Form.Label>Customer Email</Form.Label>
+            <Form.Label>
+              Customer Email <span style={{ color: "red" }}>*</span>
+            </Form.Label>
             <Form.Control
               type="email"
               onChange={(e) => setEmail(e.target.value)}
@@ -52,7 +68,9 @@ function AddModal({ show, handleCloseAddModal }) {
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="customerPhone">
-            <Form.Label>Customer Phone Number</Form.Label>
+            <Form.Label>
+              Customer Phone Number <span style={{ color: "red" }}>*</span>
+            </Form.Label>
             <Form.Control
               type="text"
               onChange={(e) => setPhone(e.target.value)}
