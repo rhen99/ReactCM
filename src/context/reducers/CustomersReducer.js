@@ -1,5 +1,5 @@
 const ACTIONS = {
-  GET_CUSTOMERS: "get-customer",
+  GET_CUSTOMERS: "get-customers",
   ADD_CUSTOMER: "add-customer",
   UPDATE_CUSTOMER: "update-customer",
   DELETE_CUSTOMER: "delete-customer",
@@ -7,7 +7,7 @@ const ACTIONS = {
 const reducer = (state, action) => {
   switch (action.type) {
     case ACTIONS.GET_CUSTOMERS:
-      return { ...state, customers: action.payload };
+      return { ...state, customers: [...action.payload] };
     case ACTIONS.ADD_CUSTOMER:
       return { ...state, customers: [...state.customers, action.payload] };
     case ACTIONS.UPDATE_CUSTOMER:

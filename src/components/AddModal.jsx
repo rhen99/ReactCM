@@ -3,10 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useAuthContext } from "../context/state/AuthState";
-import {
-  useCustomersContext,
-  setCustomer,
-} from "../context/state/CustomersState";
+import { useCustomersContext } from "../context/state/CustomersState";
 function AddModal({ show, handleCloseAddModal }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,15 +25,7 @@ function AddModal({ show, handleCloseAddModal }) {
       url,
       creator_id: uid,
     };
-    setCustomer(newCustomer)
-      .then((docRef) => {
-        addCustomer({ ...newCustomer, id: docRef.id });
-        setName("");
-        setEmail("");
-        setPhone("");
-        setUrl("");
-      })
-      .catch((err) => console.log(err));
+    addCustomer(newCustomer);
   };
   return (
     <Modal show={show} onHide={handleCloseAddModal}>
