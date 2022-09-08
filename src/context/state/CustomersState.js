@@ -5,6 +5,7 @@ import {
   setCustomerData,
   getCustomersData,
   deleteCustomerData,
+  updateCustomerData,
 } from "../../services/CustomersService";
 
 const initalState = {
@@ -38,13 +39,13 @@ export const CustomersProvider = ({ children }) => {
       .then((querySnapshot) => {
         const customersArr = [];
         querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
           let customerObj = {
             id: doc.id,
             name: doc.data().name,
             email: doc.data().email,
             phone: doc.data().phone,
             url: doc.data().url,
+            creator_id: doc.data().creator_id,
           };
           customersArr.push(customerObj);
         });
@@ -56,10 +57,14 @@ export const CustomersProvider = ({ children }) => {
       .catch((err) => console.log(err));
   };
   const updateCustomer = (newCustomer) => {
-    dispatch({
-      type: "update-customer",
-      payload: newCustomer,
-    });
+    updateCustomerData(newCustomer)
+      .then(() => {
+        dispatch({
+          type: "update-customer",
+          payload: newCustomer,
+        });
+      })
+      .catch((err) => console.log(err));
   };
   const deleteCustomer = (id) => {
     deleteCustomerData(id)

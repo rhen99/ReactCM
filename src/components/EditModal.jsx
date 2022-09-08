@@ -21,6 +21,7 @@ function EditModal({ show, handleCloseEditModal, customer }) {
       email,
       phone,
       url,
+      creator_id: customer.creator_id,
     };
     updateCustomer(newCustomer);
   };
@@ -68,7 +69,7 @@ function EditModal({ show, handleCloseEditModal, customer }) {
             />
           </Form.Group>
           <Button variant="primary" type="submit">
-            Add Customer
+            Update Customer
           </Button>
         </Form>
       </Modal.Body>

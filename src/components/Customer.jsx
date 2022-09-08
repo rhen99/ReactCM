@@ -41,7 +41,7 @@ function Customer({ customer }) {
                 Delete
               </Dropdown.Item>
               {customer.url && (
-                <Dropdown.Item href="#" target="_blank">
+                <Dropdown.Item href={customer.url} target="_blank">
                   Open Social Media
                 </Dropdown.Item>
               )}

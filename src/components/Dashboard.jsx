@@ -8,7 +8,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-//import Spinner from "react-bootstrap/Spinner";
+import Spinner from "react-bootstrap/Spinner";
 import AddModal from "./AddModal";
 
 function Dashboard() {
@@ -44,9 +44,15 @@ function Dashboard() {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <CustomerList customers={customers} />
-        </Col>
+        {!customers ? (
+          <Col className="text-center">
+            <Spinner animation="border" variant="primary" />
+          </Col>
+        ) : (
+          <Col>
+            <CustomerList customers={customers} />
+          </Col>
+        )}
       </Row>
     </Container>
   );
